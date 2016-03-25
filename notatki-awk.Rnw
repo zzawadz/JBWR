@@ -125,7 +125,12 @@ pow3(5)
 make_pow(10)(2)
 @
 
-<<include=FALSE>>=
+
+
+\marginnote{Iteratorem w R będzie funkcja bez żadnych argumentów zwracająca kolejne elementy wektora. Koniecznie sprawdź pakiet \textbf{iterators} - bywa bardzo przydatny!}
+
+\begin{tcolorbox}[width=\textwidth,colback={YellowGreen},outer arc=0mm] 
+<<iterator,include=FALSE>>=
 iter = function(x)
 {
   i = 0;
@@ -136,6 +141,18 @@ iter = function(x)
   }
 }
 @
+
+Napisz funkcję \textbf{iter} która zwraca iterator dla zadanego wektora, tak by poniższy kod wykonywał się poprawnie: 
+
+<<>>=
+x = c("Ala", "Ela","Ola")
+it = iter(x)
+it()
+it()
+it()
+@
+
+\end{tcolorbox}
 
 \subsection{Wykorzystanie funkcji zwracającej funckję w interfejsie do awk}
 
