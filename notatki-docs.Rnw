@@ -35,6 +35,8 @@ Zastosowanie Rmarkdown pozwala na tworzenie dokumentów, które następnie mogą
 
 Główną zaletą Rmarkdown jest możliwość umieszczania fragmentów kodu R, które na etapie przekształcania dokumentu do formatu docelowego zostaną wykonane, a rezulaty wstawione w odpowiednie miejsca.
 
+\begin{tcolorbox}[width=\textwidth,colback={YellowGreen},outer arc=0mm] 
+
 \begin{verbatim}
 ```{r}
 x = rnorm(100)
@@ -50,9 +52,18 @@ x = rnorm(100)
 y = rnorm(100)
 plot(x,y)
 @
+\end{tcolorbox}
 
 
+\section{Pandoc}
 
+Pandoc jest oprogramowaniem wykorzystywanym do konwersji z markdown do innych formatów. Na szczęście dla końcowego użytkownika jest on dosyć dokładnie ukryty w pakiecie rmarkdown, dzięki czemu nie ma potrzeby znać samego Pandoca.
+
+<<eval=FALSE>>=
+library(rmarkdown)
+render(input, output_format)
+html_document()
+@
 
 
 
