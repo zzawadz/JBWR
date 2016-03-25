@@ -1,0 +1,62 @@
+\documentclass{tufte-handout}
+\usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage{url}
+
+\title{Jeden by wszystkimi rządzić - dokumenty.}
+
+\author{Zygmunt Zawadzki}
+
+\begin{document}
+
+<<r setup, include=FALSE,cache=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+options(width = 45)
+@
+
+\maketitle
+
+\tableofcontents
+
+\section{Rmarkdown}
+
+Rmarkdown to rodzaj języka znaczników oparty na markdown(!). Sam język znaczników pozwala tworzyć dokumenty zawierające dodatkowe informacje o formie wyświetlenia danej części. Najpowszechniejszym językiem znaczników jest html, w przypadku którego za właściwe wyświetlenie odpowiada przeglądaraka internetowa.
+
+Sam markdown jest bardzo prosty - potrzebne materiały można znaleźć pod adresami:
+
+\begin{itemize}
+\item Podstawy - \url{http://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf}.
+\item Cheatsheet - \url{http://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf}.
+\item Strona zawierająca komplet informacji nt. rmarkdown - \url{http://rmarkdown.rstudio.com/}.
+\end{itemize}
+
+Zastosowanie Rmarkdown pozwala na tworzenie dokumentów, które następnie mogą być przekształcone na inne formaty (takie jak pdf, html, czy docx).
+
+Główną zaletą Rmarkdown jest możliwość umieszczania fragmentów kodu R, które na etapie przekształcania dokumentu do formatu docelowego zostaną wykonane, a rezulaty wstawione w odpowiednie miejsca.
+
+\begin{verbatim}
+```{r}
+x = rnorm(100)
+y = rnorm(100)
+plot(x,y)
+```
+\end{verbatim}
+
+Efekt:
+
+<<echo=FALSE,fig.height=3>>=
+x = rnorm(100)
+y = rnorm(100)
+plot(x,y)
+@
+
+
+
+
+
+
+
+
+
+\end{document}
