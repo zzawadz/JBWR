@@ -3,7 +3,7 @@
 \usepackage{tcolorbox}
 \usepackage{graphicx}
 
-\title{Jeden by wszystkimi rządzić.}
+\title{Jeden by wszystkimi rządzić - kontrola nad konsolą systemową.}
 
 \author{Zygmunt Zawadzki}
 
