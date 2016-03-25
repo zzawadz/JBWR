@@ -1,0 +1,11 @@
+
+Pinging www.google.pl [46.134.214.88] with 32 bytes of data:
+Reply from 46.134.214.88: bytes=32 time=27ms TTL=60
+Reply from 46.134.214.88: bytes=32 time=28ms TTL=60
+Reply from 46.134.214.88: bytes=32 time=28ms TTL=60
+Reply from 46.134.214.88: bytes=32 time=28ms TTL=60
+
+Ping statistics for 46.134.214.88:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 27ms, Maximum = 28ms, Average = 27ms

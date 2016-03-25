@@ -1,0 +1,189 @@
+\documentclass{tufte-handout}
+\usepackage[utf8]{inputenc}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+
+\title{Jeden by wszystkimi rządzić.}
+
+\author{Zygmunt Zawadzki}
+
+\begin{document}
+
+\newcommand{\awk}{\textbf{awk }}
+
+\maketitle
+
+\tableofcontents
+
+<<r setup, include=FALSE,cache=FALSE>>=
+knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
+options(width = 45)
+@
+
+<<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
+{print $0}
+@
+
+Wykonanie kodu tylko dla określonych linijek:
+<<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
+/Reply/ {print $0}
+@
+
+Znalezienie pierwszej linijki pasującej do wyrażenia:
+<<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
+/Reply/ {print $0; exit;}
+@
+
+Podział pola:
+
+Znalezienie pierwszej linijki pasującej do wyrażenia:
+<<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
+/Reply/ {print $3,$5}
+@
+
+Znalezienie pierwszej linijki pasującej do wyrażenia:
+<<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
+/Reply/ {
+  gsub(":", ""); 
+  gsub("time=", "");
+  gsub("ms", "");
+  print $3,$5}
+@
+
+
+\section{\awk w R}
+
+\subsection{system2 - konsola systemowa w R.}
+
+Do tej pory wywołania \awk odbywały się z konsoli systemowej. Jak jednak sprawić by wywołać \awk z poziomu R? Bezpośrednie wywołanie \awk jest niemożliwe, gdyż R nawet nie wie, że taki program jest zainstalowany. Jednak R udostępnia możliwość wywołania dowolnej komendy systemowaj przy pomocy \textbf{system2}:
+
+
+
+\begin{tcolorbox}[width=\textwidth,colback={YellowGreen},outer arc=0mm] 
+Potrzebna składnia system2:
+
+\begin{itemize}
+\item command - nazwa komendy którą będziemy wywoływać.
+\item args - dodatkowe argumenty
+\item stdout - określa miejsce do którego ma być skierowany wynik. Domyślnie wynik zostanie wypisany w konsoli R. Wartość TRUE oznacza, że R przechwyci go jako wektor, podanie nazwy pliku spowoduje zapisanie do niego wyniku działania komendy.
+\end{itemize}
+\end{tcolorbox}    
+
+Poniżej proste wywołanie systemowej funkcji \textbf{wc}: \marginnote{\textbf{wc} - to proste narzędzie zwracające dla zadanego pliku trzy liczby - ilość linii, słów i bajtów.}
+<<>>=
+system2("wc", args = "ping.txt", stdout = TRUE)
+@
+
+\subsection{Pierwsze wywołanie \awk w R}
+
+<<>>=
+system2("awk", 
+        args = "-e '/Reply/ {print $0}' ping.txt", 
+        stdout = TRUE)
+@
+
+\subsection{Opakowanie w funkcję}
+
+<<>>=
+awk = function(file, code, stdout = TRUE)
+{
+  args = sprintf("-e '%s' %s", code, file)
+  
+  system2("awk", 
+        args = args, 
+        stdout = stdout)
+}
+
+awk(code = '/Reply/ {print $0}',
+    file = "ping.txt")
+
+@
+
+\section{Funckja zwracająca funckję}
+
+W R funkcja może zwrócić funkcję.
+
+<<>>=
+make_sqr = function()
+{
+  function(x) x*x
+}
+
+sqr = make_sqr()
+sqr(2)
+@
+
+<<>>=
+make_pow = function(n)
+{
+  function(x) x^n
+}
+
+pow3 = make_pow(3)
+pow3(2)
+pow3(5)
+make_pow(10)(2)
+@
+
+<<include=FALSE>>=
+iter = function(x)
+{
+  i = 0;
+  function()
+  {
+    i <<- i + 1
+    x[[i]]
+  }
+}
+@
+
+\subsection{Wykorzystanie funkcji zwracającej funckję w interfejsie do awk}
+
+<<ffawk>>=
+make_awk = function(code)
+{
+  function(file, stdout = TRUE)
+  {
+    args = sprintf("-e '%s' %s", code, file)
+    
+    system2("awk", 
+          args = args, 
+          stdout = stdout)
+  }
+}
+
+first_column = make_awk('{print $1}')
+first_column("ping.txt")
+
+@
+
+\section{Zadanie - pingowanie strony}
+
+<<pingr>>=
+ping = function(site, 
+                pingFile = tempfile(), 
+                awkFile = tempfile())
+{
+    parse_ping = make_awk(
+  '/Reply/ {
+    gsub(":", ""); 
+    gsub("time=", "");
+    gsub("ms", "");
+    print $3,$5}
+  ')
+  
+  system2("ping", args = site, stdout = pingFile)
+  parse_ping("pingg.txt", stdout = awkFile)
+  read.delim(awkFile, sep = " ", header = FALSE)
+}
+
+ping("www.google.pl")
+
+@
+
+\section{Podsumowanie}
+
+By móc łatwo stworzyć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R stworzyć odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze stworzyć odpowiedni kod wczytujący go do R. Ale to już inna historia...
+
+
+\end{document}
