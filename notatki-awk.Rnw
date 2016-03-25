@@ -224,16 +224,7 @@ ping("www.google.pl")
 
 \section{Podsumowanie}
 
-By móc łatwo stworzyła.
-
-
-ć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R stworzyła.
-
-
-ć odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze stworzyła.
-
-
-ć odpowiedni kod wczytujący go do R. Ale to już inna historia...
+By móc łatwo stworzyć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R zbudować odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze przygotować odpowiedni kod wczytujący go do R. Ale to już inna historia...
 
 
 \end{document}
