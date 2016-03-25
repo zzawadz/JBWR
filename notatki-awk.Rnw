@@ -113,6 +113,8 @@ sqr = make_sqr()
 sqr(2)
 @
 
+Najważniejsza cechą tego mechanizmu jest to, że funkcja będąca rezultatem zapamiętuje wszystkie zmienne powstałe w trakcie działania funkcji która ją stworzyła (również argumenty funkcji-matki). Z tego też powodu możliwe są konstrukcje takie jak poniżej\footnote{Taka funkcja zwrócona przez funkcję jest nazywana \textbf{closure}.}:
+
 <<>>=
 make_pow = function(n)
 {
@@ -125,6 +127,28 @@ pow3(5)
 make_pow(10)(2)
 @
 
+
+Co więcej - z poziomu wynikowej funckji możliwa jest modyfikacja parametrów closure:
+
+<<>>=
+counter = function()
+{
+  i = 0;
+  function() 
+  {
+    # by zmodyfikowac wartosc i
+    # nalezy uzyc operatora 
+    # <<-
+    i <<- i + 1
+    i
+  }
+}
+
+ct = counter()
+ct()
+ct()
+ct()
+@
 
 
 \marginnote{Iteratorem w R będzie funkcja bez żadnych argumentów zwracająca kolejne elementy wektora. Koniecznie sprawdź pakiet \textbf{iterators} - bywa bardzo przydatny!}
@@ -200,7 +224,16 @@ ping("www.google.pl")
 
 \section{Podsumowanie}
 
-By móc łatwo stworzyć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R stworzyć odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze stworzyć odpowiedni kod wczytujący go do R. Ale to już inna historia...
+By móc łatwo stworzyła.
+
+
+ć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R stworzyła.
+
+
+ć odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze stworzyła.
+
+
+ć odpowiedni kod wczytujący go do R. Ale to już inna historia...
 
 
 \end{document}
