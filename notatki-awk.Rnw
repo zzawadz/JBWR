@@ -214,7 +214,7 @@ ping = function(site,
   ')
   
   system2("ping", args = site, stdout = pingFile)
-  parse_ping("pingg.txt", stdout = awkFile)
+  parse_ping(pingFile, stdout = awkFile)
   read.delim(awkFile, sep = " ", header = FALSE)
 }
 
