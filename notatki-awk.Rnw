@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{tcolorbox}
 \usepackage{graphicx}
+\usepackage{hyperref}
+
 
 \title{Jeden by wszystkimi rządzić - kontrola nad konsolą systemową.}
 
@@ -19,6 +21,22 @@
 knitr::opts_chunk$set(echo = TRUE, cache=TRUE)
 options(width = 45)
 @
+
+\section{Podstawy \awk}
+
+\awk jest prostym językiem skryptowym bardzo pomoagającym w pracy z logami (czyli plikami wyjściowymi z diagnostyką różnych programów, czy stanów urządzeń).
+
+\begin{itemize}
+\item \url{https://www.youtube.com/watch?v=u0wSncMHAyM} - 10 minutowe wprowadzenie do AWK (stworzony przez Unknowna z \url{uw-team.org}).
+\end{itemize}
+
+By wywołać \awk należy wpisać w konsoli systemowej:
+
+<<eval=FALSE>>=
+gawk '{print $0}' plik
+@
+
+\emph{plik} określa plik wejściowy na którym ma pracować \awk, natomiast pomiędzy \emph{' '} ukryty jest jeden z najprostszych programów.
 
 <<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
 {print $0}
@@ -41,7 +59,8 @@ Znalezienie pierwszej linijki pasującej do wyrażenia:
 /Reply/ {print $3,$5}
 @
 
-Znalezienie pierwszej linijki pasującej do wyrażenia:
+Zamiana znaków z wykorzystaniem \emph{gsub}\footnote{W R również występuje funkcja \emph{gsub} o podobnym działaniu, jednak bardziej przyjazna w użyciu może być funkcja \emph{stri\_replace} z pakietu \emph{stringi}.}.
+
 <<engine='awk', engine.opts=shQuote('ping.txt'), size="small">>=
 /Reply/ {
   gsub(":", ""); 
@@ -56,8 +75,6 @@ Znalezienie pierwszej linijki pasującej do wyrażenia:
 \subsection{system2 - konsola systemowa w R.}
 
 Do tej pory wywołania \awk odbywały się z konsoli systemowej. Jak jednak sprawić by wywołać \awk z poziomu R? Bezpośrednie wywołanie \awk jest niemożliwe, gdyż R nawet nie wie, że taki program jest zainstalowany. Jednak R udostępnia możliwość wywołania dowolnej komendy systemowaj przy pomocy \textbf{system2}:
-
-
 
 \begin{tcolorbox}[width=\textwidth,colback={YellowGreen},outer arc=0mm] 
 Potrzebna składnia system2:
@@ -226,5 +243,20 @@ ping("www.google.pl")
 
 By móc łatwo stworzyć interface do potrzebengo programu wystarczy, by był on możliwy do wykonania z poziomu konsoli systemowej. Wtedy wystarczy tylko za pomocą kodu w R zbudować odpowiednie wywołanie i wykorzystać interface \textbf{system2}. Oczywiście jeżeli wynikiem działania programu jest jakiś plik, wtedy potrzeba jeszcze przygotować odpowiedni kod wczytujący go do R. Ale to już inna historia...
 
+\section{Odpowiedzi}
+
+Iterator:
+
+<<iteratorAns>>=
+iter = function(x)
+{
+  i = 0;
+  function()
+  {
+    i <<- i + 1
+    x[[i]]
+  }
+}
+@
 
 \end{document}
