@@ -1,5 +1,9 @@
 *.aux
 *.out
+temp
+
+template_files
+template_cache
 
 *.html
 # History files

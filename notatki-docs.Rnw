@@ -66,7 +66,23 @@ html_document()
 @
 
 
+\section{whisker}
 
+Whisker jest bardzo prostym pakietem, którego funkcjonalność zamyka się w jednej funkcji - \emph{whisker.render}. Jednym z argumentów przyjmowanych przez tę funkcję jest tekst zawierający tagi tego typu \{\{\{tag\}\}\}, a drugim jest lista incjalizacyjna. Efektem działania whiskera jest tekst w którym \{\{\{tagi\}\}\} zostały zastąpione przez wartości z listy inicjalizacyjnej.
+
+Przykład:
+
+<<>>=
+library(pacman)
+p_load("whisker")
+
+txt = "Ala ma {{{zwierze}}}  a sierotka ma {{{rzecz}}}. 
+       Lepiej miec {{{zwierze}}} niz {{{rzecz}}}"
+init = list(zwierze  = "kot", rzecz = "kubek")
+
+whisker.render(txt, init)
+
+@
 
 
 
