@@ -1,0 +1,54 @@
+---
+title: "Template"
+author: "Zygmunt Zawadzki"
+date: "16 kwietnia 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Analiza {{{index}}}
+
+```{r, include=FALSE}
+if(!require(pacman, quietly = TRUE))
+{
+  install.packages("pacman")
+  library(pacman)
+}
+
+p_load("PerformanceAnalytics","quantmod")
+p_load("knitr")
+```
+
+```{r, cache=TRUE, warning=FALSE}
+options("getSymbols.warning4.0"=FALSE)
+data = getSymbols("^GSPC", auto.assign = FALSE)
+
+close = data[,4]["2010/2016"]
+
+roc = ROC(close, type = "discrete", na.pad = FALSE)
+
+maxDrawdown(roc)
+```
+
+## Wykres:
+
+```{r}
+plot(cumprod(1+roc), main = "Wykres skumulowanego zwrotu dla {{{index}}}")
+```
+
+## Drawdown:
+
+Maksymalna strata w okresie od `r index(close)[1]` do `r tail(index(close),1)` wynosi `r maxDrawdown(roc)`.
+
+```{r}
+yearly = apply.yearly(roc, function(x) 
+{
+  c(prod(1+x) - 1, maxDrawdown(x)) * 100
+})
+
+colnames(yearly) = c("Zwrot","Drawdown")
+kable(yearly)
+```
