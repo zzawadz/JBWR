@@ -15,7 +15,8 @@ if(!require(pacman, quietly = TRUE))
   library(pacman)
 }
 
-p_load("rmarkdown", "knitr", "dplyr","devtools", "whisker")
+p_load("rmarkdown", "knitr", "dplyr",
+        "devtools", "whisker", "quantmod", "PerformanceAnalytics")
 p_load_gh("eRkaKrakow/erkaSupport")
 
 ```
