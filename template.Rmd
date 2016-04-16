@@ -1,6 +1,6 @@
 ---
 title: "Template"
-author: "Zygmunt Zawadzki"
+author: "{{{author}}}"
 date: "16 kwietnia 2016"
 output: html_document
 ---
@@ -24,9 +24,9 @@ p_load("knitr")
 
 ```{r, cache=TRUE, warning=FALSE}
 options("getSymbols.warning4.0"=FALSE)
-data = getSymbols("^GSPC", auto.assign = FALSE)
+data = getSymbols("{{{index}}}", auto.assign = FALSE)
 
-close = data[,4]["2010/2016"]
+close = data[,4]["{{{time}}}"]
 
 roc = ROC(close, type = "discrete", na.pad = FALSE)
 
