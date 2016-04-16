@@ -2,8 +2,15 @@
 *.out
 temp
 
+rendered.md
+rendered.Rmd
+
+figure
+
 template_files
 template_cache
+rendered_cache
+rendered_files
 
 *.html
 # History files
