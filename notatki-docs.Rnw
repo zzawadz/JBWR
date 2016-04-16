@@ -84,6 +84,20 @@ whisker.render(txt, init)
 
 @
 
+\subsection{Renderowanie dokumentu z templatu.}
 
+<<>>=
+template = readLines("template.Rmd")
+template = paste(template, collapse = "\n")
+
+init = list(author = "", index = "^GSPC", time = "2010/2016")
+
+template = whisker.render(template, init)
+
+cat(template, file = "rendered.Rmd")
+
+render("rendered.Rmd", quiet = TRUE)
+
+@
 
 \end{document}
