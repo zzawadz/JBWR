@@ -74,7 +74,7 @@ Przykład:
 
 <<>>=
 library(pacman)
-p_load("whisker")
+p_load("whisker","rmarkdown")
 
 txt = "Ala ma {{{zwierze}}}  a sierotka ma {{{rzecz}}}. 
        Lepiej miec {{{zwierze}}} niz {{{rzecz}}}"
